@@ -10,7 +10,7 @@ By Sujal, Joel, Devin, Jayce, Mo, Ryan, Abraham
 import tkinter as tk
 
 
-# OU Crimson and Cream Colors
+# OU crimson and cream
 OU_CRIMSON = "#841617"
 OU_CREAM = "#FDF9D8"
 
@@ -29,12 +29,12 @@ class StartScreen:
                                    fg=OU_CRIMSON, bg=OU_CREAM)
         self.title_main.place(x=150, y=90)
 
-        # Subtitle
+        # subtitles
         self.subtitle = tk.Label(root, text="Test your OU knowledge!",
                                  font=("Arial", 16, "italic"), bg=OU_CREAM, fg="black")
         self.subtitle.pack(pady=160)
 
-        # Start Button
+        # start button
         self.start_button = tk.Button(root, text="Start Game", font=("Arial", 18, "bold"),
                                       bg=OU_CRIMSON, fg="black", activebackground="#660000",
                                       activeforeground="white", width=12, height=2,
@@ -49,7 +49,7 @@ class StartScreen:
         self.exit_button.pack(pady=10)
 
     def start_game(self):
-        # Clear screen for new one
+        # clear screen for new window
         for widget in self.root.winfo_children():
             widget.destroy()
 
