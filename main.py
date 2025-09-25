@@ -13,7 +13,6 @@ import sqlite3
 OU_CRIMSON = "#841617"
 OU_CREAM = "#FDF9D8"
 
-
 class StartScreen:
     def __init__(self, root):
         self.root = root
