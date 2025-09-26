@@ -2,7 +2,7 @@
 
 OU TRIVIA APP
 ID: Group B
-By Sujal, Joel, Devin, Jayce, Mo, Ryan, Abraham
+By Sujal, Jole, Devin, Jayce, Mo, Ryan, Abraham
 
 """
 import tkinter as tk
