@@ -96,8 +96,8 @@ When prompted, enter your name to begin the quiz. Player data will be saved auto
 - **Joel** – UI design, trivia modes, sound effects  
 - **Devin** – Score tracking, leaderboards  
 - **Jayce** – Animations, visual feedback  
-- **Mo** – Database management, player accounts  
-- **Ryan** – AI/ML pipeline integration  
+- **Mo** – AI/ML pipeline integration   
+- **Ryan** – Database management, player accounts  
 - **Abraham** – Current events scraping, adaptive difficulty  
 
 ---
