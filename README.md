@@ -107,9 +107,3 @@ When prompted, enter your name to begin the quiz. Player data will be saved auto
 - Social/online multiplayer mode  
 - Minigames with mascot rewards  
 - Analytics dashboard for player performance  
-
----
-
-⚡ **CEO Soundbite for OU Trivia App**:  
-“One product, many experiences. OU Trivia blends tradition with technology — from sports facts to AI-powered questions — making every round engaging, personalized, and scalable for growth.”  
-x
