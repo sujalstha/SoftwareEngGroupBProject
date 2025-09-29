@@ -93,7 +93,7 @@ When prompted, enter your name to begin the quiz. Player data will be saved auto
 
 ## 👥 Team Members
 - **Sujal** – Project lead, trivia bank, AI integration  
-- **Joel** – UI design, trivia modes, sound effects  
+- **Jole** – UI design, trivia modes, sound effects  
 - **Devin** – Score tracking, leaderboards  
 - **Jayce** – Animations, visual feedback  
 - **Mo** – AI/ML pipeline integration   
