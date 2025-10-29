@@ -92,18 +92,10 @@ When prompted, enter your name to begin the quiz. Player data will be saved auto
 ---
 
 ## 👥 Team Members
-- **Sujal** – Project lead, trivia bank, AI integration  
+- **Sujal** – Project lead, Trivia Bank, AI integration  
 - **Jole** – UI design, trivia modes, sound effects  
 - **Devin** – Score tracking, leaderboards  
 - **Jayce** – Animations, visual feedback  
 - **Mo** – AI/ML pipeline integration   
 - **Ryan** – Database management, player accounts  
 - **Abraham** – Current events scraping, adaptive difficulty  
-
----
-
-## 📌 Future Enhancements
-- Mobile port (Kivy/Flutter for Python integration)  
-- Social/online multiplayer mode  
-- Minigames with mascot rewards  
-- Analytics dashboard for player performance  
