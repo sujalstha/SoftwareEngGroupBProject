@@ -9,7 +9,6 @@ class DBChecker:
 
     def _connect(self):
         return sqlite3.connect(self.db_file)
-
     def ensure_min_schema(self):
         """Create the players table if it doesn't exist."""
         with self._connect() as con:

@@ -12,7 +12,6 @@ def setup_temp_db():
     if os.path.exists(TEST_DB):
         os.remove(TEST_DB)
 
-
 def test_create_table_and_schema(setup_temp_db):
     db = DBChecker(TEST_DB)
     db.ensure_min_schema()
