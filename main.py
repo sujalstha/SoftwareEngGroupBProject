@@ -1,6 +1,6 @@
 """
 OU TRIVIA APP — Minimal progress tracking
-Group B: Sujal, Joel, Devin, Jayce, Mo, Ryan, Abraham
+Group B: Sujal, Jole, Devin, Jayce, Mo, Ryan, Abraham
 """
 
 import tkinter as tk
