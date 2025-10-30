@@ -1,0 +1,76 @@
+from dataclasses import dataclass
+from typing import List, Tuple
+
+# ---------- Data Model ----------
+@dataclass(frozen=True)
+class Question:
+    prompt: str
+    choices: List[str]
+    answer_index: int  # 0-based index of the correct choice
+    fact: str
+
+
+# ---------- 5 OU Greek Life Questions ----------
+QUESTIONS: List[Question] = [
+    Question(
+        "Which council governs many fraternities at OU?",
+        ["IFC", "NPHC", "PHA", "All of the above"],
+        3,
+        "OU has multiple councils: IFC, NPHC, and PHA—serving different organizations.",
+    ),
+    Question(
+        "NPHC historically represents which organizations?",
+        ["STEM clubs", "Historically Black Greek-letter orgs", "Club sports", "Residence halls"],
+        1,
+        "NPHC is the umbrella for the Divine Nine.",
+    ),
+    Question(
+        "Primary recruitment for many PHA sororities at OU is usually which semester?",
+        ["Fall", "Winter", "Spring", "Summer"],
+        0,
+        "Most PHA primary recruitment happens in the fall.",
+    ),
+    Question(
+        "What best describes Greek philanthropy events at OU?",
+        ["Members-only parties", "Charity fund/awareness events", "Only athletics", "Bylaws exams"],
+        1,
+        "Philanthropy events raise funds and awareness for charitable causes.",
+    ),
+    Question(
+        "Which office partners with Greek orgs for leadership/compliance at OU?",
+        ["Housing & Food", "Student Financial Center", "Fraternity & Sorority Programs & Services (FSPS)", "Bookstore"],
+        2,
+        "FSPS supports advising, risk management, and leadership.",
+    ),
+]
+
+
+# ---------- Logic ----------
+def evaluate_answer(q: Question, selected_index: int) -> Tuple[bool, str]:
+    """
+    Checks if the selected answer is correct.
+
+    Args:
+        q: Question object
+        selected_index: index (0-based) of selected choice
+
+    Returns:
+        (is_correct, feedback_message)
+    """
+    if selected_index < 0 or selected_index >= len(q.choices):
+        raise IndexError("Invalid answer index")
+
+    correct = selected_index == q.answer_index
+    if correct:
+        return True, f"✅ Correct. {q.fact}"
+    else:
+        correct_text = q.choices[q.answer_index]
+        return False, f"❌ Incorrect. Correct answer: {correct_text}. {q.fact}"
+
+
+# ---------- Example Unit Test (for quick checks) ----------
+if __name__ == "__main__":
+    # Simple print test (you can remove this when importing into main)
+    for i, q in enumerate(QUESTIONS, start=1):
+        ok, msg = evaluate_answer(q, q.answer_index)  # simulate correct answers
+        print(f"Q{i}: {q.prompt}\n{msg}\n")
