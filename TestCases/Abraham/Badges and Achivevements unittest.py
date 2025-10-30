@@ -1,12 +1,6 @@
 import unittest
 from datetime import datetime, timedelta
 
-# import everything from your file
-# if your file is named ou_badges.py, do:
-# from ou_badges import (
-#     BadgeEngine, InMemoryStorage,
-#     UserLogin, AnswerResult, QuizFinished
-# )
 
 from your_module_name import (   # ← change this to your filename (no .py)
     BadgeEngine,
