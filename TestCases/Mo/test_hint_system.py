@@ -1,10 +1,6 @@
 """
 Pytest unit tests for HintSystem
 
-Why a separate test file?
-- Keeps production feature code clean.
-- Lets you demo behavior (AI success vs. fallback) without touching the app.
-
 How to run:
     pip install pytest
     pytest -q
@@ -129,3 +125,4 @@ def test_hint_system_facade(monkeypatch, five_questions):
 
     assert isinstance(hint, str) and len(hint) > 0
     assert hint == qs[3].hint_local
+
