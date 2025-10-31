@@ -1,60 +1,49 @@
-import os
-import sqlite3
 import pytest
 import tkinter as tk
-from main import PlayerInfoScreen  # assuming your file is named main.py
-
-
-@pytest.fixture
-def setup_db(tmp_path):
-    """Create a temporary database path for testing."""
-    test_db_path = tmp_path / "test_trivia_data.db"
-    yield test_db_path
-    if test_db_path.exists():
-        test_db_path.unlink()
-
+from tkinter import messagebox
+from unittest.mock import patch
+import importlib
 
 @pytest.fixture
-def setup_player_info(monkeypatch, setup_db):
-    """Create a PlayerInfoScreen instance using a temp db."""
-    root = tk.Tk()
-    player_screen = PlayerInfoScreen(root)
+def app():
+    """Reload the login module fresh for each test."""
+    import Login_Button  # ✅ your real filename
+    importlib.reload(Login_Button)
+    return Login_Button
 
-    # Patch the database filename
-    monkeypatch.setattr(sqlite3, "connect", lambda _: sqlite3.connect(setup_db))
-    return player_screen
+def test_login_success(app):
+    """Check that correct credentials trigger success message and window closes."""
+    
+    # Mock valid credentials
+    app.username_entry.delete(0, tk.END)
+    app.username_entry.insert(0, "outrivia")
 
+    app.password_entry.delete(0, tk.END)
+    app.password_entry.insert(0, "boomer")
 
-def test_save_player_name_creates_db_and_table(setup_player_info, setup_db):
-    """Ensure _save_player_name creates the database and saves a record."""
-    player = setup_player_info
-    player._save_player_name("Jayce")
+    mock_showinfo = patch.object(messagebox, "showinfo").start()
+    mock_destroy = patch.object(app.root, "destroy").start()
 
-    conn = sqlite3.connect(setup_db)
-    cursor = conn.cursor()
-    cursor.execute("SELECT name FROM players")
-    result = cursor.fetchone()
-    conn.close()
+    app.login()
 
-    assert result[0] == "Jayce", "Player name should be saved in database"
+    mock_showinfo.assert_called_once_with("Login Successful", "Welcome to Trivia OU!")
+    mock_destroy.assert_called_once()
 
+    patch.stopall()
 
-def test_start_quiz_with_valid_name(setup_player_info):
-    """Ensure start_quiz saves the name and updates the UI."""
-    player = setup_player_info
-    player.username_entry.insert(0, "Jayce")
+def test_login_failure(app):
+    """Check that wrong credentials trigger failure message."""
+    
+    app.username_entry.delete(0, tk.END)
+    app.username_entry.insert(0, "fakeUser")
 
-    player.start_quiz()
-    labels = [child for child in player.root.winfo_children() if isinstance(child, tk.Label)]
+    app.password_entry.delete(0, tk.END)
+    app.password_entry.insert(0, "wrongPass")
 
-    # The last label should greet the user
-    assert any("Welcome, Jayce!" in label.cget("text") for label in labels)
+    mock_showerror = patch.object(messagebox, "showerror").start()
 
+    app.login()
 
-def test_start_quiz_with_empty_name(setup_player_info):
-    """Ensure start_quiz shows error if name not entered."""
-    player = setup_player_info
-    player.start_quiz()
+    mock_showerror.assert_called_once_with("Login Failed", "Invalid username or password")
 
-    labels = [child for child in player.root.winfo_children() if isinstance(child, tk.Label)]
-    assert any("Please enter your name." in label.cget("text") for label in labels)
+    patch.stopall()
