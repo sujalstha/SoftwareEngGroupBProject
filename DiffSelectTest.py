@@ -1,4 +1,4 @@
-# DiffSelectTest.py
+
 import unittest
 from DiffSelect import DiffSelect
 
@@ -24,8 +24,9 @@ class TestDiffSelect(unittest.TestCase):
         self.assertEqual(self.diff_select.current_diff, "Hard")
 
     def test_invalid_selection(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaises(ValueError) as context:
             self.diff_select.difficulty_level_sel("Insane")
+        self.assertEqual(str(context.exception), "Invalid difficulty selection")
 
 
 if __name__ == "__main__":

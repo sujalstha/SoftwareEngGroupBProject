@@ -3,9 +3,12 @@ OU TRIVIA APP — Minimal progress tracking
 Group B: Sujal, Jole, Devin, Jayce, Mo, Ryan, Abraham
 """
 
+
 import tkinter as tk
 import sqlite3
 from pathlib import Path
+from DiffSelect import DiffSelect
+
 
 # OU crimson and cream
 OU_CRIMSON = "#841617"
@@ -141,13 +144,14 @@ class StartScreen:
     def start_game(self):
         for widget in self.root.winfo_children():
             widget.destroy()
-        PlayerInfoScreen(self.root, self.db)
+        PlayerInfoScreen(self.root, self.db, diff_manager)
 
 
 class PlayerInfoScreen:
-    def __init__(self, root: tk.Tk, db: Database):
+    def __init__(self, root: tk.Tk, db: Database, diff_manager: DiffSelect):
         self.db = db
         self.root = root
+        self.diff_manager = diff_manager
         self.root.title("Enter Your Name")
         self.root.configure(bg=OU_CREAM)
 
@@ -204,11 +208,58 @@ class PlayerInfoScreen:
 
         for widget in self.root.winfo_children():
             widget.destroy()
-        LevelScreen(self.root, self.db, name, level)
+        #LevelScreen(self.root, self.db, name, level)
+        DifficultyScreen(self.root, self.db, name, self.diff_manager)
+
+class DifficultyScreen:
+    """New screen to select difficulty after entering player name"""
+    def __init__(self, root: tk.Tk, db: Database, player_name: str, diff_manager: DiffSelect):
+        self.root = root
+        self.db = db
+        self.player_name = player_name
+        self.diff_manager = diff_manager
+
+        self.root.title("Select Difficulty")
+        self.root.configure(bg=OU_CREAM)
+
+        tk.Label(
+            self.root,
+            text=f"Welcome, {player_name}!\nSelect Difficulty:",
+            font=("Arial Black", 20),
+            fg=OU_CRIMSON,
+            bg=OU_CREAM,
+            justify="center"
+        ).pack(pady=40)
+
+        for level in ["Easy", "Medium", "Hard"]:
+            btn = tk.Button(
+                self.root,
+                text=level,
+                font=("Arial", 16, "bold"),
+                bg=OU_CRIMSON,
+                fg="black",
+                width=12,
+                height=2,
+                command=lambda l=level: self.select_diff(l)
+            )
+            btn.pack(pady=10)
+
+    def select_diff(self, level):
+        try:
+            self.diff_manager.difficulty_level_sel(level)
+        except ValueError as e:
+            print(f"Error selecting difficulty: {e}")
+            return
+
+        for widget in self.root.winfo_children():
+            widget.destroy()
+
+        level_num = self.db.get_or_create_player(self.player_name)
+        LevelScreen(self.root, self.db, self.player_name, level_num, self.diff_manager)
 
 
 class LevelScreen:
-    def __init__(self, root: tk.Tk, db: Database, name: str, level: int):
+    def __init__(self, root: tk.Tk, db: Database, name: str, level: int, diff_manager: DiffSelect):
         self.root = root
         self.db = db
         self.name = name
@@ -308,5 +359,6 @@ class LevelScreen:
 if __name__ == "__main__":
     root = tk.Tk()
     db = Database(DB_PATH)
+    diff_manager = DiffSelect()
     app = StartScreen(root, db)
     root.mainloop()
