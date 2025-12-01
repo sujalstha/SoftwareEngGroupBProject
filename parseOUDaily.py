@@ -47,7 +47,7 @@ class ArticleScraper:
                 content_text = content_text.split(marker)[0].strip()
                 break
 
-        # Remove multiple blank lines
+        # removes multiple blank lines
         content_text = re.sub(r"\n{2,}", "\n\n", content_text)
 
         return title_text, content_text
