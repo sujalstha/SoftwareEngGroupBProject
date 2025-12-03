@@ -3,6 +3,7 @@ import random
 from openai import OpenAI
 from parseOUDaily import ArticleScraper, URLS
 
+# Text me if you need the key - Ryan
 # Make sure OPENAI_API_KEY is set in your environment
 client = OpenAI()
 
