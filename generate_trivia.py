@@ -151,13 +151,13 @@ if __name__ == "__main__":
             trivia_list.append(trivia_item)
 
             # Optional: print what was added
-            print("\nAdded trivia:")
-            print("Q:", question)
-            print("Options:", shuffled_options)
-            print("Hint:", hint)
-            print("Correct index:", correct_index)
+           
+            print(question)
+            print(shuffled_options)
+            print(hint)
+            print(correct_index)
 
         except Exception as e:
             print("Error calling OpenAI:", e)
 
-    print(f"\nTotal trivia questions generated: {len(trivia_list)}")
+    
