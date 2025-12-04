@@ -5,9 +5,7 @@ class JSONBuilder:
     def __init__(self):
         pass
 
-    # ----------------------------------------------------------------------
     # PARSER: Take OpenAI raw output and extract Q, answers, index, hint
-    # ----------------------------------------------------------------------
     def parse_openai_output(self, text):
         """
         Expected OpenAI output format:
@@ -51,9 +49,7 @@ class JSONBuilder:
 
         return question, answers, correct_index, hint
 
-    # ----------------------------------------------------------------------
     # BUILDER: Takes parsed values → clean JSON dict
-    # ----------------------------------------------------------------------
     def build(self, question, answers, correct_index, hint):
         """
         Builds the final JSON object.
@@ -73,9 +69,7 @@ class JSONBuilder:
             "hint": hint
         }
 
-    # ----------------------------------------------------------------------
     # SAVER: Write dict → .json file
-    # ----------------------------------------------------------------------
     def save(self, data, filename="question.json"):
         with open(filename, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=4, ensure_ascii=False)
