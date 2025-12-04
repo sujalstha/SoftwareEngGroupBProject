@@ -3,9 +3,10 @@ import ast
 
 class JSONBuilder:
     def __init__(self):
-        pass
+        # Stores all questions for batch mode
+        self.questions = []
 
-    # PARSER: Take OpenAI raw output and extract Q, answers, index, hint
+    # PARSER: Convert OpenAI raw text → fields
     def parse_openai_output(self, text):
         """
         Expected OpenAI output format:
@@ -14,12 +15,8 @@ class JSONBuilder:
             ['Ans1', 'Ans2', 'Ans3', 'Ans4']
             Hint: <hint text>
             <correct_index>
-
-        Returns:
-            question, answers, correct_index, hint
         """
 
-        # Split + remove empty lines
         lines = [line.strip() for line in text.split("\n") if line.strip()]
 
         if len(lines) < 4:
@@ -28,20 +25,20 @@ class JSONBuilder:
         # 1. Question
         question = lines[0]
 
-        # 2. Answers (Python list string → actual list)
+        # 2. Answers
         try:
             answers = ast.literal_eval(lines[1])
         except Exception:
             raise ValueError("Could not parse answer list from line 2.")
 
-        # 3. Hint ("Hint: <text>")
+        # 3. Hint
         hint_line = lines[2]
         if hint_line.lower().startswith("hint:"):
             hint = hint_line[5:].strip()
         else:
             raise ValueError("Hint line missing or malformed.")
 
-        # 4. Correct index (last line)
+        # 4. Correct index
         try:
             correct_index = int(lines[-1])
         except:
@@ -49,12 +46,8 @@ class JSONBuilder:
 
         return question, answers, correct_index, hint
 
-    # BUILDER: Takes parsed values → clean JSON dict
+    # BUILDER: Construct JSON object for ONE question
     def build(self, question, answers, correct_index, hint):
-        """
-        Builds the final JSON object.
-        """
-
         question = question.strip()
         answers = [a.strip() for a in answers]
         hint = hint.strip()
@@ -69,8 +62,15 @@ class JSONBuilder:
             "hint": hint
         }
 
-    # SAVER: Write dict → .json file
-    def save(self, data, filename="question.json"):
+    # ADD: Add question to batch list
+    def add_question(self, question_dict):
+        self.questions.append(question_dict)
+
+    # SAVE ALL: Write *all questions* to one JSON file
+    def save_all(self, filename="trivia_questions.json"):
+        bundle = {"questions": self.questions}
+
         with open(filename, "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=4, ensure_ascii=False)
-        print(f"[JSONBuilder] Saved → {filename}")
+            json.dump(bundle, f, indent=4, ensure_ascii=False)
+
+        print(f"[JSONBuilder] Saved {len(self.questions)} questions → {filename}")
