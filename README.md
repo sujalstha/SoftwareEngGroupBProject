@@ -111,7 +111,7 @@ Packages:
 
 - `beautifulsoup4`
 
-## A valid OpenAI API key !!!
+## A Valid OpenAI API key !!!
 
 Install dependencies (after cloning the repo):
 
