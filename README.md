@@ -114,7 +114,6 @@ Packages:
 ## A Valid OpenAI API key !!!
 
 Install dependencies (after cloning the repo):
-
 ```pip install openai requests beautifulsoup4```
 
 Set your API key (example for macOS/Linux):
@@ -139,4 +138,24 @@ pip install openai requests beautifulsoup4
 
 # Set your API key (see above), then run:
 python main.py
+
 ```
+🗂 Backlog & Roadmap (Updated)
+Task	Status
+Basic Tkinter trivia UI	✅ Done
+Difficulty selection (Easy/Med/Hard)	✅ Done
+AI-powered question generation	✅ Done
+Timer per question	✅ Done
+Streak tracking + popups	✅ Done
+Background threading for loading	✅ Done
+OU Daily article scraping	✅ Done
+Clean JSON question pipeline	✅ Done
+Auto-parse latest OU Daily links	🔁 Planned
+Reduce load times (URL limiting, caching, pre-generation)	🔁 Planned
+Customizable game settings (timer, # questions, categories)	🔁 Planned
+Reintroduce SQLite for scores/users	🔁 Planned
+High score board/leaderboard	🔁 Planned
+Mascot animations (Boomer/Sooner)	🔁 Planned
+Sound effects for correct/incorrect	🔁 Planned
+Multiple game modes (Endless, Sudden Death, Practice)	🔁 Planned
+Theming/dark mode	🔁 Planned
