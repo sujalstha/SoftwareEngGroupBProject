@@ -1,4 +1,4 @@
-# OU Trivia App 🎓🔴⚪️  
+# OU Trivia App # 🎓 
 _By Group B: Sujal, Jole, Devin, Jayce, Mo, Ryan, Abraham_
 
 ---
