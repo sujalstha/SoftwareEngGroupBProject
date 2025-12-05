@@ -95,12 +95,13 @@ OU_Trivia_App/
 │── trivia_questions.json# Last generated question set (overwritten each run)
 │── README.md            # Project documentation
 ```
+---
 
-###🚀 Getting Started
+## 🚀 Getting Started
 
 1. Prerequisites
 
-###Python 3.9+
+- `Python 3.9+`
 
 Packages:
 
@@ -110,7 +111,7 @@ Packages:
 
 - `beautifulsoup4`
 
-A valid OpenAI API key
+## A valid OpenAI API key !!!
 
 Install dependencies (after cloning the repo):
 
