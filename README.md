@@ -1,17 +1,19 @@
-# OU Trivia App   
-- BY GROUP_B
+# OU Trivia App 🎓🔴⚪️  
+_By Group B: Sujal, Jole, Devin, Jayce, Mo, Ryan, Abraham_
+
 ---
 
 ## 📖 Overview
 
-**OU Trivia** is a desktop application that tests knowledge of the University of Oklahoma’s history, sports, culture, and current events. The game uses:
+**OU Trivia** is a desktop application that tests knowledge of the University of Oklahoma’s history, sports, culture, and current events.  
+The game uses:
 
 - **Web scraping** of OU Daily articles  
 - **OpenAI API** to generate fresh trivia questions  
 - **JSON pipelines** for question formatting  
 - **Tkinter** for the graphical user interface  
 
-Each playthrough generates a brand-new set of questions based on real OU news articles.
+Each playthrough generates a brand‑new set of questions based on real OU news articles.
 
 ---
 
@@ -41,6 +43,7 @@ Each playthrough generates a brand-new set of questions based on real OU news ar
 
 ## 📂 Project Structure
 
+```
 OU_Trivia_App/
 │── main.py             
 │── generate_trivia.py   
@@ -50,6 +53,7 @@ OU_Trivia_App/
 │── urls.py              
 │── trivia_questions.json
 │── README.md            
+```
 
 ---
 
@@ -60,53 +64,66 @@ OU_Trivia_App/
 - Python 3.9+
 - Install required packages:
 
+```
 pip install openai requests beautifulsoup4
+```
 
 - Set your OpenAI API key:
 
-macOS/Linux:
+**macOS/Linux:**
+```
 export OPENAI_API_KEY="sk-xxxxxxxxxxxxxxxx"
+```
 
-Windows PowerShell:
+**Windows PowerShell:**
+```
 $env:OPENAI_API_KEY="sk-xxxxxxxxxxxxxxxx"
+```
 
 ---
 
 ### 2. Run From Command Line
 
+```
 git clone <repo-link>
 cd OU_Trivia_App
 
 python -m venv venv
 
-Windows:
+# Windows:
 venv\Scripts\activate
 
-macOS/Linux:
+# macOS/Linux:
 source venv/bin/activate
 
 pip install openai requests beautifulsoup4
 
 python main.py
+```
 
 You will see a window:
 
 1. Pick a difficulty (Easy / Medium / Hard)  
-2. Questions are generated from OU Daily articles  
+2. Wait while questions are generated  
 3. Play the quiz with timers & streak tracking  
 
 ---
 
 ## 🧑‍💻 Running in PyCharm
 
-1. Open the OU_Trivia_App folder in PyCharm  
-2. Set Project → Python Interpreter to Python 3.9+  
-3. Install packages: openai, requests, beautifulsoup4  
-4. Add environment variable:
+1. Open the `OU_Trivia_App` folder in PyCharm  
+2. Set **Project → Python Interpreter** to Python 3.9+  
+3. Install packages:  
+   - `openai`  
+   - `requests`  
+   - `beautifulsoup4`  
+4. Add environment variable:  
 
+```
 OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxx
+```
 
-5. Run main.py
+5. Run `main.py`
 
 ---
 
@@ -116,17 +133,23 @@ OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxx
 2. Select interpreter (Python 3.9+)  
 3. Install dependencies:
 
+```
 pip install openai requests beautifulsoup4
+```
 
 4. Set the API key:
 
-macOS/Linux:
+**macOS/Linux**
+```
 export OPENAI_API_KEY="sk-xxxxxxxxxxxxxxxx"
+```
 
-Windows PowerShell:
+**Windows PowerShell**
+```
 $env:OPENAI_API_KEY="sk-xxxxxxxxxxxxxxxx"
+```
 
-5. Run main.py with the Run ▶️ button or F5
+5. Run using the **Run ▶️** button or **F5**
 
 ---
 
@@ -134,12 +157,12 @@ $env:OPENAI_API_KEY="sk-xxxxxxxxxxxxxxxx"
 
 - Auto-parse newest OU Daily article links  
 - Faster load times (parallel scraping, caching, pre-generation)  
-- More customizable game settings (timer length, question count, categories)  
-- Dark mode & accessibility options  
+- More customizable game settings  
+- Dark mode & accessibility features  
 - Sound effects & simple animations  
 - Multiple game modes (Endless, Sudden Death, Practice)  
 - SQLite leaderboard & player profiles  
 
 ---
 
-Boomer Sooner! 🐴🔴⚪️
+**Boomer Sooner!** 🐴🔴⚪️
