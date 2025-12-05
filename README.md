@@ -100,7 +100,7 @@ OU_Trivia_App/
 
 1. Prerequisites
 
-Python 3.9+
+###Python 3.9+
 
 Packages:
 
@@ -113,5 +113,29 @@ Packages:
 A valid OpenAI API key
 
 Install dependencies (after cloning the repo):
+
+```plaintext pip install openai requests beautifulsoup4```
+
+Set your API key (example for macOS/Linux):
+```plaintext export OPENAI_API_KEY="sk-xxxxxxxxxxxxxxxx"```
+
+Or for Windows PowerShell:
+```plaintext $env:OPENAI_API_KEY="sk-xxxxxxxxxxxxxxxx"```
+
+### Running from the Command Line - Probably the Quickest:
+```plaintext
+git clone <repo-link>
+cd OU_Trivia_App
+
+# (Optional) create and activate a venv
+python -m venv venv
+# Windows:
+venv\Scripts\activate
+# macOS/Linux:
+source venv/bin/activate
+
 pip install openai requests beautifulsoup4
 
+# Set your API key (see above), then run:
+python main.py
+```
