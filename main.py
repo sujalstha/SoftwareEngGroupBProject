@@ -1,135 +1,82 @@
-"""
-OU TRIVIA APP — Minimal progress tracking
-Group B: Sujal, Jole, Devin_Test, Jayce, Mo, Ryan, Abraham
-"""
-
-
+import random
 import tkinter as tk
-import sqlite3
-from pathlib import Path
-from DiffSelect import DiffSelect
 
+from DiffSelect import DiffSelect
+from generate_trivia import generate_questions_for_difficulty
 
 # OU crimson and cream
 OU_CRIMSON = "#841617"
 OU_CREAM = "#FDF9D8"
-DB_PATH = Path("trivia_data.db")
+
+# Time limits per difficulty (in seconds)
+TIME_PER_DIFFICULTY = {
+    "Easy": 30,
+    "Medium": 20,
+    "Hard": 10,
+}
 
 
-# --------- Data Layer ---------
-class Database:
-    def __init__(self, db_path: Path):
-        self.db_path = db_path
-        self._init_db()
-
-    def _connect(self):
-        return sqlite3.connect(self.db_path)
-
-    def _init_db(self):
-        with self._connect() as conn:
-            cur = conn.cursor()
-            cur.execute(
-                """
-                CREATE TABLE IF NOT EXISTS players (
-                    name TEXT PRIMARY KEY,
-                    level INTEGER NOT NULL DEFAULT 1,
-                    created_at TEXT NOT NULL DEFAULT (datetime('now')),
-                    updated_at TEXT NOT NULL DEFAULT (datetime('now'))
-                )
-                """
-            )
-            conn.commit()
-
-    def get_or_create_player(self, name: str) -> int:
-        name = name.strip()
-        if not name:
-            raise ValueError("Empty name")
-        with self._connect() as conn:
-            cur = conn.cursor()
-            # Try to fetch existing
-            cur.execute("SELECT level FROM players WHERE name = ?", (name,))
-            row = cur.fetchone()
-            if row:
-                return int(row[0])
-            # Insert new with default level 1
-            cur.execute(
-                """
-                INSERT INTO players(name, level) VALUES(?, 1)
-                """,
-                (name,),
-            )
-            conn.commit()
-            return 1
-
-    def update_level(self, name: str, new_level: int) -> None:
-        with self._connect() as conn:
-            cur = conn.cursor()
-            cur.execute(
-                """
-                UPDATE players
-                   SET level = ?, updated_at = datetime('now')
-                 WHERE name = ?
-                """,
-                (int(new_level), name),
-            )
-            conn.commit()
-
-    def get_level(self, name: str) -> int:
-        with self._connect() as conn:
-            cur = conn.cursor()
-            cur.execute("SELECT level FROM players WHERE name = ?", (name,))
-            row = cur.fetchone()
-            return int(row[0]) if row else 1
-
-
-# --------- UI Screens ---------
 class StartScreen:
-    def __init__(self, root: tk.Tk, db: Database):
-        self.db = db
+    def __init__(self, root: tk.Tk, diff_manager: DiffSelect):
         self.root = root
+        self.diff_manager = diff_manager
+
         self.root.title("OU Trivia Game")
-        self.root.geometry("500x500")
+        self.root.geometry("600x500")
         self.root.configure(bg=OU_CREAM)
         self.root.resizable(False, False)
 
-        self.main_frame = tk.Frame(root, bg=OU_CREAM)
-        self.main_frame.pack(expand=True, padx=20, pady=20)
+        main_frame = tk.Frame(root, bg=OU_CREAM)
+        main_frame.pack(expand=True, padx=20, pady=20)
 
-        self.title_main = tk.Label(
-            self.main_frame,
+        title_main = tk.Label(
+            main_frame,
             text="OU Trivia",
             font=("Arial Black", 40),
             fg=OU_CRIMSON,
             bg=OU_CREAM,
         )
-        self.title_main.pack(pady=(0, 10))
+        title_main.pack(pady=(0, 10))
 
-        self.subtitle = tk.Label(
-            self.main_frame,
+        subtitle = tk.Label(
+            main_frame,
             text="Test your OU knowledge!",
             font=("Arial", 16, "italic"),
             bg=OU_CREAM,
             fg="black",
         )
-        self.subtitle.pack(pady=10)
+        subtitle.pack(pady=10)
 
-        self.start_button = tk.Button(
-            self.main_frame,
-            text="Start",
-            font=("Arial", 18, "bold"),
-            bg=OU_CRIMSON,
+        diff_label = tk.Label(
+            main_frame,
+            text="Select Difficulty:",
+            font=("Arial", 16, "bold"),
+            bg=OU_CREAM,
             fg="black",
-            activebackground="#660000",
-            activeforeground="white",
-            width=12,
-            height=2,
-            relief="raised",
-            command=self.start_game,
         )
-        self.start_button.pack(pady=20)
+        diff_label.pack(pady=(20, 10))
 
-        self.exit_button = tk.Button(
-            self.main_frame,
+        btn_frame = tk.Frame(main_frame, bg=OU_CREAM)
+        btn_frame.pack()
+
+        for level in ["Easy", "Medium", "Hard"]:
+            btn = tk.Button(
+                btn_frame,
+                text=level,
+                font=("Arial", 16, "bold"),
+                bg=OU_CRIMSON,
+                fg="black",
+                activebackground="#660000",
+                activeforeground="white",
+                width=10,
+                height=2,
+                relief="raised",
+                command=lambda l=level: self.start_game(l),
+            )
+            btn.pack(side="left", padx=10, pady=10)
+
+        exit_button = tk.Button(
+            main_frame,
             text="Exit",
             font=("Arial", 14),
             fg="black",
@@ -139,226 +86,328 @@ class StartScreen:
             relief="raised",
             command=root.quit,
         )
-        self.exit_button.pack(pady=10)
+        exit_button.pack(pady=20)
 
-    def start_game(self):
-        for widget in self.root.winfo_children():
-            widget.destroy()
-        PlayerInfoScreen(self.root, self.db, diff_manager)
-
-
-class PlayerInfoScreen:
-    def __init__(self, root: tk.Tk, db: Database, diff_manager: DiffSelect):
-        self.db = db
-        self.root = root
-        self.diff_manager = diff_manager
-        self.root.title("Enter Your Name")
-        self.root.configure(bg=OU_CREAM)
-
-        tk.Label(
-            self.root,
-            text="Enter your Name",
-            font=("Arial Black", 20),
-            fg=OU_CRIMSON,
+        self.status_label = tk.Label(
+            main_frame,
+            text="",
+            fg="red",
             bg=OU_CREAM,
-        ).place(relx=0.5, rely=0.4, anchor="center")
-
-        self.username_entry = tk.Entry(
-            self.root,
-            width=30,
-            font=("Arial", 14),
-            bg="white",
-            borderwidth=2,
-            relief="solid",
-            highlightthickness=1,
-            highlightbackground="black",
+            font=("Arial", 12),
         )
-        self.username_entry.place(relx=0.5, rely=0.5, anchor="center")
-        self.username_entry.focus_set()  # keep focus on open
+        self.status_label.pack(pady=(5, 0))
 
-        self.start_button = tk.Button(
-            self.root,
-            text="Start Quiz",
-            font=("Arial", 16, "bold"),
-            bg=OU_CRIMSON,
-            fg="black",
-            activebackground="#660000",
-            activeforeground="white",
-            width=15,
-            height=2,
-            relief="raised",
-            command=self.start_quiz,
-        )
-        self.start_button.place(relx=0.5, rely=0.6, anchor="center")
-
-        # Inline error label
-        self.error_label = tk.Label(self.root, text="", fg="red", bg=OU_CREAM, font=("Arial", 11))
-        self.error_label.place(relx=0.5, rely=0.68, anchor="center")
-
-    def start_quiz(self):
-        name = self.username_entry.get().strip()
-        if not name:
-            self.error_label.config(text="Please enter your name.")
-            return
+    def start_game(self, difficulty: str):
+        # Save difficulty in DiffSelect
         try:
-            level = self.db.get_or_create_player(name)
-        except Exception as e:
-            self.error_label.config(text=f"Database error: {e}")
+            self.diff_manager.difficulty_level_sel(difficulty)
+        except ValueError as e:
+            self.status_label.config(text=str(e))
             return
 
+        # Let user know we are generating questions
+        self.status_label.config(text=f"Generating {difficulty} questions... please wait.")
+        self.root.update_idletasks()
+
+        # Call the generator (this overwrites the JSON file each time)
+        try:
+            questions = generate_questions_for_difficulty(difficulty)
+        except Exception as e:
+            self.status_label.config(text=f"Error generating questions: {e}")
+            return
+
+        if not questions:
+            self.status_label.config(
+                text=f"No questions were generated. Check URLs or API key."
+            )
+            return
+
+        # Shuffle questions to vary order
+        random.shuffle(questions)
+
+        # Clear the window and go to quiz screen
         for widget in self.root.winfo_children():
             widget.destroy()
-        #LevelScreen(self.root, self.db, name, level)
-        DifficultyScreen(self.root, self.db, name, self.diff_manager)
+        QuizScreen(self.root, questions, difficulty)
 
-class DifficultyScreen:
-    """New screen to select difficulty after entering player name"""
-    def __init__(self, root: tk.Tk, db: Database, player_name: str, diff_manager: DiffSelect):
+
+class QuizScreen:
+    def __init__(self, root: tk.Tk, questions, difficulty: str):
         self.root = root
-        self.db = db
-        self.player_name = player_name
-        self.diff_manager = diff_manager
+        self.questions = questions
+        self.difficulty = difficulty
+        self.current_index = 0
+        self.streak = 0
+        self.timer_id = None
+        self.remaining_time = TIME_PER_DIFFICULTY.get(difficulty, 30)
 
-        self.root.title("Select Difficulty")
+        self.root.title(f"OU Trivia — {difficulty} mode")
         self.root.configure(bg=OU_CREAM)
 
-        tk.Label(
-            self.root,
-            text=f"Welcome, {player_name}!\nSelect Difficulty:",
-            font=("Arial Black", 20),
-            fg=OU_CRIMSON,
-            bg=OU_CREAM,
-            justify="center"
-        ).pack(pady=40)
+        # Layout frames
+        self.main_frame = tk.Frame(self.root, bg=OU_CREAM)
+        self.main_frame.pack(expand=True, fill="both", padx=20, pady=20)
 
-        for level in ["Easy", "Medium", "Hard"]:
+        # Top info: difficulty, timer, streak
+        self.info_frame = tk.Frame(self.main_frame, bg=OU_CREAM)
+        self.info_frame.pack(fill="x", pady=(0, 10))
+
+        self.diff_label = tk.Label(
+            self.info_frame,
+            text=f"Difficulty: {self.difficulty}",
+            font=("Arial", 14, "bold"),
+            bg=OU_CREAM,
+            fg="black",
+        )
+        self.diff_label.pack(side="left")
+
+        self.timer_label = tk.Label(
+            self.info_frame,
+            text="Time: --",
+            font=("Arial", 14, "bold"),
+            bg=OU_CREAM,
+            fg="black",
+        )
+        self.timer_label.pack(side="left", padx=20)
+
+        self.streak_label = tk.Label(
+            self.info_frame,
+            text="Streak: 0",
+            font=("Arial", 14, "bold"),
+            bg=OU_CREAM,
+            fg="black",
+        )
+        self.streak_label.pack(side="right")
+
+        # Question text
+        self.question_label = tk.Label(
+            self.main_frame,
+            text="",
+            font=("Arial", 18, "bold"),
+            bg=OU_CREAM,
+            fg="black",
+            wraplength=550,
+            justify="center",
+        )
+        self.question_label.pack(pady=(20, 20))
+
+        # Hint label
+        self.hint_label = tk.Label(
+            self.main_frame,
+            text="Hint: ",
+            font=("Arial", 12, "italic"),
+            bg=OU_CREAM,
+            fg="black",
+            wraplength=550,
+            justify="center",
+        )
+        self.hint_label.pack(pady=(0, 10))
+
+        # Answer buttons
+        self.buttons_frame = tk.Frame(self.main_frame, bg=OU_CREAM)
+        self.buttons_frame.pack(pady=10)
+
+        self.option_buttons = []
+        for i in range(4):
             btn = tk.Button(
-                self.root,
-                text=level,
-                font=("Arial", 16, "bold"),
+                self.buttons_frame,
+                text=f"Option {i+1}",
+                font=("Arial", 14),
                 bg=OU_CRIMSON,
                 fg="black",
-                width=12,
+                activebackground="#660000",
+                activeforeground="white",
+                width=25,
                 height=2,
-                command=lambda l=level: self.select_diff(l)
+                wraplength=400,
+                justify="center",
+                command=lambda idx=i: self.handle_answer(idx),
             )
-            btn.pack(pady=10)
+            btn.grid(row=i, column=0, pady=5)
+            self.option_buttons.append(btn)
 
-    def select_diff(self, level):
-        try:
-            self.diff_manager.difficulty_level_sel(level)
-        except ValueError as e:
-            print(f"Error selecting difficulty: {e}")
+        self.status_label = tk.Label(
+            self.main_frame,
+            text="",
+            font=("Arial", 12),
+            bg=OU_CREAM,
+            fg="black",
+        )
+        self.status_label.pack(pady=(10, 0))
+
+        self.load_question()
+
+    # ---------------- Timer logic ----------------
+
+    def start_timer(self):
+        self.remaining_time = TIME_PER_DIFFICULTY.get(self.difficulty, 30)
+        self.update_timer_label()
+        if self.timer_id is not None:
+            self.root.after_cancel(self.timer_id)
+        self.timer_id = self.root.after(1000, self._tick)
+
+    def _tick(self):
+        self.remaining_time -= 1
+        if self.remaining_time <= 0:
+            self.update_timer_label()
+            self.game_over("Time's up! Game end.")
             return
 
-        for widget in self.root.winfo_children():
-            widget.destroy()
+        self.update_timer_label()
+        self.timer_id = self.root.after(1000, self._tick)
 
-        level_num = self.db.get_or_create_player(self.player_name)
-        LevelScreen(self.root, self.db, self.player_name, level_num, self.diff_manager)
+    def update_timer_label(self):
+        self.timer_label.config(text=f"Time: {self.remaining_time}s")
 
+    # ---------------- Question logic ----------------
 
-class LevelScreen:
-    def __init__(self, root: tk.Tk, db: Database, name: str, level: int, diff_manager: DiffSelect):
-        self.root = root
-        self.db = db
-        self.name = name
-        self.level = level
+    def load_question(self):
+        if self.current_index >= len(self.questions):
+            self.you_win()
+            return
 
-        self.root.title("Quiz Progress")
-        self.root.configure(bg=OU_CREAM)
+        q = self.questions[self.current_index]
 
-        wrapper = tk.Frame(self.root, bg=OU_CREAM)
-        wrapper.pack(expand=True, fill="both", padx=20, pady=20)
+        self.question_label.config(text=q["question"])
+        self.hint_label.config(text=f"Hint: {q.get('hint', '')}")
+        self.status_label.config(text="")
 
-        self.heading = tk.Label(
-            wrapper,
-            text=f"Welcome, {self.name}!",
-            font=("Arial Black", 26),
-            fg=OU_CRIMSON,
+        answers = q["answers"]
+        for i, btn in enumerate(self.option_buttons):
+            if i < len(answers):
+                btn.config(text=answers[i], state="normal")
+            else:
+                btn.config(text="", state="disabled")
+
+        self.update_streak_label()
+        self.start_timer()
+
+    def handle_answer(self, idx: int):
+        # Stop timer during processing
+        if self.timer_id is not None:
+            self.root.after_cancel(self.timer_id)
+            self.timer_id = None
+
+        q = self.questions[self.current_index]
+        correct_idx = q["correct_index"]
+
+        if idx == correct_idx:
+            self.streak += 1
+            self.status_label.config(text="Correct!", fg="green")
+            self.update_streak_label()
+            self._maybe_show_streak_popup()
+            self.current_index += 1
+            self.root.after(500, self.load_question)
+        else:
+            self.game_over("Wrong answer! Game end.")
+
+    def update_streak_label(self):
+        self.streak_label.config(text=f"Streak: {self.streak}")
+
+    def _maybe_show_streak_popup(self):
+        # Show popup for 5, 10, 15 in a row
+        if self.streak in (5, 10, 15):
+            popup = tk.Toplevel(self.root)
+            popup.title("Streak!")
+            popup.configure(bg=OU_CREAM)
+            popup.geometry("300x150")
+
+            msg = tk.Label(
+                popup,
+                text=f"{self.streak} in a row!",
+                font=("Arial Black", 18),
+                bg=OU_CREAM,
+                fg=OU_CRIMSON,
+            )
+            msg.pack(expand=True, pady=20)
+
+            ok_btn = tk.Button(
+                popup,
+                text="Keep Going",
+                font=("Arial", 12, "bold"),
+                bg=OU_CRIMSON,
+                fg="black",
+                activebackground="#660000",
+                command=popup.destroy,
+            )
+            ok_btn.pack(pady=10)
+
+    # ---------------- End states ----------------
+
+    def disable_all_buttons(self):
+        for btn in self.option_buttons:
+            btn.config(state="disabled")
+
+    def game_over(self, message: str):
+        if self.timer_id is not None:
+            self.root.after_cancel(self.timer_id)
+            self.timer_id = None
+
+        self.disable_all_buttons()
+        self.status_label.config(text=message, fg="red")
+
+        end_frame = tk.Frame(self.main_frame, bg=OU_CREAM)
+        end_frame.pack(pady=20)
+
+        final_label = tk.Label(
+            end_frame,
+            text=f"Final streak: {self.streak}",
+            font=("Arial", 14, "bold"),
             bg=OU_CREAM,
+            fg="black",
         )
-        self.heading.pack(pady=(0, 10))
+        final_label.pack(pady=5)
 
-        self.level_label = tk.Label(
-            wrapper,
-            text=self._level_text(),
-            font=("Arial", 18),
+        exit_btn = tk.Button(
+            end_frame,
+            text="Exit Game",
+            font=("Arial", 12, "bold"),
+            bg=OU_CRIMSON,
+            fg="black",
+            activebackground="#660000",
+            command=self.root.quit,
+        )
+        exit_btn.pack(pady=5)
+
+    def you_win(self):
+        if self.timer_id is not None:
+            self.root.after_cancel(self.timer_id)
+            self.timer_id = None
+
+        self.disable_all_buttons()
+        self.status_label.config(
+            text="End game – you win!",
+            fg="green",
+        )
+
+        end_frame = tk.Frame(self.main_frame, bg=OU_CREAM)
+        end_frame.pack(pady=20)
+
+        final_label = tk.Label(
+            end_frame,
+            text=f"You answered all questions!\nFinal streak: {self.streak}",
+            font=("Arial", 14, "bold"),
             bg=OU_CREAM,
+            fg="black",
+            justify="center",
         )
-        self.level_label.pack(pady=(0, 20))
+        final_label.pack(pady=5)
 
-        self.advance_btn = tk.Button(
-            wrapper,
-            text="Mark level complete →",
-            font=("Arial", 16, "bold"),
+        exit_btn = tk.Button(
+            end_frame,
+            text="Exit Game",
+            font=("Arial", 12, "bold"),
             bg=OU_CRIMSON,
             fg="black",
             activebackground="#660000",
-            activeforeground="white",
-            width=22,
-            height=2,
-            relief="raised",
-            command=self._advance_level,
+            command=self.root.quit,
         )
-        self.advance_btn.pack(pady=10)
-
-        self.reset_btn = tk.Button(
-            wrapper,
-            text="Reset to Level 1",
-            font=("Arial", 12),
-            bg=OU_CRIMSON,
-            fg="black",
-            activebackground="#660000",
-            width=16,
-            relief="raised",
-            command=self._reset_level,
-        )
-        self.reset_btn.pack(pady=(6, 16))
-
-        self.status = tk.Label(wrapper, text="", fg="green", bg=OU_CREAM, font=("Arial", 11))
-        self.status.pack()
-
-        self.back_btn = tk.Button(
-            wrapper,
-            text="← Back to Start",
-            font=("Arial", 12),
-            bg=OU_CRIMSON,
-            fg="black",
-            activebackground="#660000",
-            relief="raised",
-            command=self._back_to_start,
-        )
-        self.back_btn.pack(pady=8)
-
-    def _level_text(self) -> str:
-        return f"Current Level: {self.level}"
-
-    def _refresh_level_label(self):
-        self.level_label.config(text=self._level_text())
-
-    def _advance_level(self):
-        self.level += 1
-        self.db.update_level(self.name, self.level)
-        self._refresh_level_label()
-        self.status.config(text="Progress saved.")
-
-    def _reset_level(self):
-        self.level = 1
-        self.db.update_level(self.name, self.level)
-        self._refresh_level_label()
-        self.status.config(text="Progress reset.")
-
-    def _back_to_start(self):
-        for widget in self.root.winfo_children():
-            widget.destroy()
-        StartScreen(self.root, self.db)
+        exit_btn.pack(pady=5)
 
 
-# --------- Main ---------
+# --------- Main entry ---------
 if __name__ == "__main__":
     root = tk.Tk()
-    db = Database(DB_PATH)
     diff_manager = DiffSelect()
-    app = StartScreen(root, db)
+    StartScreen(root, diff_manager)
     root.mainloop()
