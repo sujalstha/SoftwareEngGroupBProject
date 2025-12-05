@@ -115,13 +115,13 @@ Packages:
 
 Install dependencies (after cloning the repo):
 
-```plaintext pip install openai requests beautifulsoup4```
+```pip install openai requests beautifulsoup4```
 
 Set your API key (example for macOS/Linux):
-```plaintext export OPENAI_API_KEY="sk-xxxxxxxxxxxxxxxx"```
+```OPENAI_API_KEY="sk-xxxxxxxxxxxxxxxx"```
 
 Or for Windows PowerShell:
-```plaintext $env:OPENAI_API_KEY="sk-xxxxxxxxxxxxxxxx"```
+```$env:OPENAI_API_KEY="sk-xxxxxxxxxxxxxxxx"```
 
 ### Running from the Command Line - Probably the Quickest:
 ```plaintext
