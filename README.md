@@ -1,4 +1,4 @@
-# OU Trivia App # 🎓 
+# OU Trivia App # 
 _By Group B: Sujal, Jole, Devin, Jayce, Mo, Ryan, Abraham_
 
 ---
@@ -94,3 +94,57 @@ OU_Trivia_App/
 │── urls.py              # (Optional) Separate URL list module
 │── trivia_questions.json# Last generated question set (overwritten each run)
 │── README.md            # Project documentation
+
+🚀 Getting Started
+1. Prerequisites
+
+Python 3.9+
+
+Packages:
+
+openai
+
+requests
+
+beautifulsoup4
+
+A valid OpenAI API key
+
+Install dependencies (after cloning the repo):
+
+pip install openai requests beautifulsoup4
+
+
+Set your API key (example for macOS/Linux):
+
+export OPENAI_API_KEY="sk-xxxxxxxxxxxxxxxx"
+
+
+Or for Windows PowerShell:
+
+$env:OPENAI_API_KEY="sk-xxxxxxxxxxxxxxxx"
+
+2. Running from the Command Line (quickest)
+git clone <repo-link>
+cd OU_Trivia_App
+
+# (Optional) create and activate a venv
+python -m venv venv
+# Windows:
+venv\Scripts\activate
+# macOS/Linux:
+source venv/bin/activate
+
+pip install openai requests beautifulsoup4
+
+# Set your API key (see above), then run:
+python main.py
+
+
+You’ll see a window:
+
+Choose a difficulty (Easy / Medium / Hard).
+
+Wait briefly while questions are generated.
+
+Play the quiz with timed questions and streak tracking.
