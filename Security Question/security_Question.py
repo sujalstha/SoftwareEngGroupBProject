@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Request, HTTPException
+from generate_trivia import generate_questions_for_difficulty
 
 app = FastAPI()
 
