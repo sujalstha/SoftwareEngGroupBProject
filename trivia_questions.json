@@ -1,0 +1,400 @@
+{
+    "questions": [
+        {
+            "question": "What action did OU take regarding the graduate instructor after a student filed a discrimination claim about a Bible-based essay grade?",
+            "answers": [
+                "Placed the graduate instructor on leave",
+                "Issued a formal apology to the student",
+                "Changed the grading policy for essays",
+                "Dismissed the graduate instructor immediately"
+            ],
+            "correct_index": 0,
+            "hint": "The university's immediate response involved personnel status.",
+            "source_title": "OU puts graduate instructor on leave after student claims discrimination on Bible-based essay grade"
+        },
+        {
+            "question": "What potential conflict is caused by a possible OU football home playoff game in December 2025?",
+            "answers": [
+                "Final exams and graduation ceremonies",
+                "Scheduled maintenance at the stadium",
+                "Conflict with NBA games",
+                "Homecoming weekend events"
+            ],
+            "correct_index": 0,
+            "hint": "Timing of academic events clashes with football schedule",
+            "source_title": "Potential OU football home playoff game poses conflict with final exams, graduation ceremonies"
+        },
+        {
+            "question": "What seasonal problem is the Catlett Music Center facing as temperatures begin to drop?",
+            "answers": [
+                "Bee swarms inside classrooms",
+                "Wasp infestations seeking warmth",
+                "Rodent invasions in the basement",
+                "Mold growth on musical instruments"
+            ],
+            "correct_index": 1,
+            "hint": "Insects returning for warmth during cold nights",
+            "source_title": "Seasonal wasp problem troubles Catlett Music Center as temperatures begin to drop"
+        },
+        {
+            "question": "Which OU official was named to lead the newly merged Graduate College combining Norman and Health campuses?",
+            "answers": [
+                "Provost André-Denis Wright",
+                "Dean Randall Hewes",
+                "Provost Gary Raskob",
+                "President Joseph Harroz"
+            ],
+            "correct_index": 1,
+            "hint": "He was previously dean of the Norman Graduate College",
+            "source_title": "OU announces Norman, Health graduate colleges to merge; University Libraries to centralize"
+        },
+        {
+            "question": "What procedural change did the OU Undergraduate Student Congress amend in their recent meeting?",
+            "answers": [
+                "Election runoff procedure",
+                "Student organization funding guidelines",
+                "Campus event approval process",
+                "Library book loan duration"
+            ],
+            "correct_index": 0,
+            "hint": "It relates to how elections are conducted.",
+            "source_title": "Undergraduate Student Congress amends election runoff procedures, conducts class supplies survey"
+        },
+        {
+            "question": "Which specific OU department experienced a controversy involving a professor's resignation and allegations against the department chair in November 2023?",
+            "answers": [
+                "Department of Communication",
+                "Department of Psychology",
+                "Department of History",
+                "Department of Sociology"
+            ],
+            "correct_index": 3,
+            "hint": "The professor sent an email referencing a disagreement with their department chair.",
+            "source_title": "OU communication professor resigns during class, alleges harassment disputed by department chair"
+        },
+        {
+            "question": "What was the cause of the power outage in Norman that affected OU students over the weekend?",
+            "answers": [
+                "A severe storm damage",
+                "Equipment failure requiring repair or replacement",
+                "Planned maintenance by OG&E",
+                "Cybersecurity breach on OG&E systems"
+            ],
+            "correct_index": 1,
+            "hint": "The cause involved physical infrastructure problems at OG&E.",
+            "source_title": "OG&E confirms equipment issues cause of weekend outage that left thousands in Norman without power"
+        },
+        {
+            "question": "Which policy change did the Undergraduate Student Congress implement regarding officer compensation?",
+            "answers": [
+                "Compensation changes must wait until after a regular election or appointment",
+                "Officers can receive compensation immediately after amendments",
+                "Election commission members may endorse candidates",
+                "Compensation alterations are decided by election commission alone"
+            ],
+            "correct_index": 0,
+            "hint": "When do compensation alterations take effect after the amendment?",
+            "source_title": "Undergraduate Student Congress amends officer compensations, revises election commission expectations"
+        },
+        {
+            "question": "Which charity benefits from the barbecue following the Bedlam Flag Football game featuring OU’s Pride of Oklahoma marching band?",
+            "answers": [
+                "Oklahoma Food Bank",
+                "El Sistema Oklahoma",
+                "Big Brothers Big Sisters",
+                "Habitat for Humanity"
+            ],
+            "correct_index": 1,
+            "hint": "It’s a nonprofit providing free music education in Oklahoma City Public Schools.",
+            "source_title": "OU, OSU marching bands to play in ‘Bedlam’ flag football game, fundraising for El Sistema Oklahoma"
+        },
+        {
+            "question": "Which OU residence hall has been designated exclusively for freshmen due to increasing class sizes?",
+            "answers": [
+                "Traditions East",
+                "Traditions West",
+                "Kraettli Apartments",
+                "McCasland Hall"
+            ],
+            "correct_index": 0,
+            "hint": "It shifted to freshman-only housing as part of the First-Year Housing Master Plan.",
+            "source_title": "Traditions East to become freshman-only housing amid construction, growing class sizes"
+        },
+        {
+            "question": "What position does OU alum Kris Glenn currently hold at the University of Oklahoma?",
+            "answers": [
+                "Director of OU Parking and Transportation Services",
+                "Head of OU Public Relations",
+                "OU Athletic Director",
+                "Dean of OU Marketing"
+            ],
+            "correct_index": 3,
+            "hint": "He oversees parking, shuttles, and vehicle fleets.",
+            "source_title": "OU parking director shares journey to managing campus transportation"
+        },
+        {
+            "question": "Which OU landmark is Steven Crowder scheduled to be near during his debate event hosted by OU Young Americans for Freedom?",
+            "answers": [
+                "Bizzell Memorial Library",
+                "Lieberman Hall",
+                "Gaylord Family - Oklahoma Memorial Stadium",
+                "Noble Research Center"
+            ],
+            "correct_index": 0,
+            "hint": "It's a historic library on campus",
+            "source_title": "Conservative commentator to host debate bringing heightened security, armed law enforcement to campus"
+        },
+        {
+            "question": "Which local skate shop sponsored the OU Skate Club's first-ever skateboarding competition against Texas A&M?",
+            "answers": [
+                "Money Ruins Everything",
+                "Skate or Die",
+                "Boardwalk Skates",
+                "Tony's Skate Shack"
+            ],
+            "correct_index": 0,
+            "hint": "The sponsor's name reflects a critical view of money.",
+            "source_title": "OU Skate Club collaborates with Texas A&M, holds first skateboarding competition in schools' history"
+        },
+        {
+            "question": "What is the title of OU's first-ever appointed officer in the field of artificial intelligence?",
+            "answers": [
+                "Chief Data Officer",
+                "Chief Artificial Intelligence Officer",
+                "Director of AI Research",
+                "AI Program Coordinator"
+            ],
+            "correct_index": 1,
+            "hint": "The title includes \"chief\" and relates specifically to artificial intelligence.",
+            "source_title": "OU’s first-ever chief AI officer shares vision for artificial intelligence’s role on campus"
+        },
+        {
+            "question": "Which OU library has undergone significant modernization and resource updates under Dean Denise Stephens' leadership?",
+            "answers": [
+                "Bizzell Memorial Library",
+                "Noble Research Center",
+                "Anchor Library",
+                "Carl Albert Center"
+            ],
+            "correct_index": 3,
+            "hint": "The article highlights changes in this historic OU library.",
+            "source_title": "OU Dean of University Libraries discusses library modernization, improvements"
+        },
+        {
+            "question": "Which university did Class of 2027 wide receiver Tra’Von Hall commit to, choosing over Ole Miss, Auburn, and Vanderbilt?",
+            "answers": [
+                "University of Oklahoma",
+                "Ole Miss",
+                "Auburn University",
+                "Vanderbilt University"
+            ],
+            "correct_index": 0,
+            "hint": "He said \"I'm home\" after committing.",
+            "source_title": "Class of 2027 wide receiver Tra’Von Hall commits to OU football"
+        },
+        {
+            "question": "What was the University of Oklahoma football team's overall record after their win against LSU as reported in the AP Poll update?",
+            "answers": [
+                "9-3",
+                "10-2",
+                "8-4",
+                "11-1"
+            ],
+            "correct_index": 1,
+            "hint": "Check the record listed with the team’s SEC and overall numbers.",
+            "source_title": "OU football remains No. 8 in AP Poll following LSU win"
+        },
+        {
+            "question": "Which OU football player threw three interceptions but led the Sooners to a 17-13 victory over LSU in 2025?",
+            "answers": [
+                "Deion Burks",
+                "John Mateer",
+                "Isaiah Sategna",
+                "Lincoln Riley"
+            ],
+            "correct_index": 1,
+            "hint": "He is the redshirt junior quarterback known for perseverance.",
+            "source_title": "'Keeps his eye on the prize': John Mateer displays perseverance as OU football defeats LSU"
+        },
+        {
+            "question": "What was the length of Isaiah Sategna’s game-winning touchdown catch against LSU?",
+            "answers": [
+                "45 yards",
+                "58 yards",
+                "62 yards",
+                "50 yards"
+            ],
+            "correct_index": 1,
+            "hint": "Think about the specific yardage mentioned for Sategna’s clutch catch.",
+            "source_title": "'Pretty special': Isaiah Sategna’s fourth-quarter touchdown lifts OU football over LSU"
+        },
+        {
+            "question": "What was the final score in OU's victory over LSU at Gaylord Family-Oklahoma Memorial Stadium mentioned in the article?",
+            "answers": [
+                "17-13",
+                "21-14",
+                "24-20",
+                "14-10"
+            ],
+            "correct_index": 0,
+            "hint": "Look for the exact score in the article's summary of the game.",
+            "source_title": "5 key plays seal OU’s victory over LSU, preserve College Football Playoff hopes"
+        },
+        {
+            "question": "What was the final score of the OU vs. LSU game at Gaylord Family-Oklahoma Memorial Stadium?",
+            "answers": [
+                "OU 17, LSU 13",
+                "OU 20, LSU 10",
+                "OU 14, LSU 17",
+                "OU 17, LSU 6"
+            ],
+            "correct_index": 0,
+            "hint": "The game ended with OU scoring 17 points and LSU under 15.",
+            "source_title": "OU football defeats LSU 17-13 to maintain playoff hopes"
+        },
+        {
+            "question": "Which University of Oklahoma offensive lineman was listed as \"out\" ahead of the Sooners' game against LSU according to the latest SEC availability report?",
+            "answers": [
+                "Noah Johnson",
+                "Heath Ozaeta",
+                "Calijah Kancey",
+                "Jason Williams"
+            ],
+            "correct_index": 1,
+            "hint": "The report mentioned a redshirt sophomore on the offensive line being unavailable.",
+            "source_title": "SEC availability: Heath Ozaeta listed as out ahead of LSU matchup"
+        },
+        {
+            "question": "Which specific passer rating did former OU quarterback Jalen Hurts achieve during the Eagles' loss to the Bears?",
+            "answers": [
+                "84.2",
+                "90.5",
+                "78.9",
+                "88.3"
+            ],
+            "correct_index": 0,
+            "hint": "It’s a number above 80 but below 85.",
+            "source_title": "Former OU quarterback Jalen Hurts, Eagles fall 24-15 to Bears at home"
+        },
+        {
+            "question": "Which university did Class of 2026 edge rusher Dane Bathurst originally commit to before choosing OU?",
+            "answers": [
+                "Duke",
+                "Ohio State",
+                "Alabama",
+                "Texas"
+            ],
+            "correct_index": 0,
+            "hint": "He flipped his commitment from a school known for strong academics and basketball.",
+            "source_title": "Class of 2026 edge rusher Dane Bathurst commits to OU football"
+        },
+        {
+            "question": "Which two universities did OU football flip recruits from in the 2026 recruiting class?",
+            "answers": [
+                "Southern Methodist University and Texas A&M University",
+                "Texas Tech and Baylor",
+                "Arkansas and Texas",
+                "LSU and Texas Christian University"
+            ],
+            "correct_index": 0,
+            "hint": "Look at the original commitments of Markel Ford and Jonathan Hatton Jr.",
+            "source_title": "OU football secures two 2026 recruitment flips through Markel Ford, Jonathan Hatton Jr."
+        },
+        {
+            "question": "Which OU defensive player led the team in tackles against Missouri with a team-high 10 tackles?",
+            "answers": [
+                "Eli Bowen",
+                "Jacobe Johnson",
+                "Owen Heinecke",
+                "Kip Lewis"
+            ],
+            "correct_index": 2,
+            "hint": "He is a redshirt junior linebacker.",
+            "source_title": "'Biggest game of my life': Kendal Daniels, OU defense look to close season with statement win"
+        },
+        {
+            "question": "What was the University of Oklahoma football team's ranking in the College Football Playoff after their win over Missouri?",
+            "answers": [
+                "No. 5",
+                "No. 8",
+                "No. 10",
+                "No. 12"
+            ],
+            "correct_index": 1,
+            "hint": "The ranking stayed the same after their November 25 game.",
+            "source_title": "OU football remains No. 8 in College Football Playoff rankings"
+        },
+        {
+            "question": "Who won the Jim Thorpe Award national defensive back of the week after OU's 17-6 win over Missouri?",
+            "answers": [
+                "Peyton Bowen",
+                "Cale Gundy",
+                "Zaven Collins",
+                "Eric Striker"
+            ],
+            "correct_index": 0,
+            "hint": "He is an OU junior safety honored after Week 13.",
+            "source_title": "OU football's Peyton Bowen wins Jim Thorpe Award national defensive back of the week"
+        },
+        {
+            "question": "What is John Mateer's class standing and position on the OU football team during their final regular season game against LSU?",
+            "answers": [
+                "Sophomore running back",
+                "Redshirt junior quarterback",
+                "Senior wide receiver",
+                "Freshman linebacker"
+            ],
+            "correct_index": 1,
+            "hint": "Think about the specific role Mateer plays on the team.",
+            "source_title": "'Blessing to have the opportunity': OU QB John Mateer prepares for final test to clinch playoffs"
+        },
+        {
+            "question": "Which injury caused former OU quarterback Baker Mayfield to leave the Tampa Bay Buccaneers' game against the Rams?",
+            "answers": [
+                "Right knee injury",
+                "Left shoulder injury",
+                "Concussion",
+                "Right ankle injury"
+            ],
+            "correct_index": 1,
+            "hint": "The injury happened shortly before halftime and involved his shoulder.",
+            "source_title": "Former OU quarterback Baker Mayfield leaves game with injury as Buccaneers lose 34-7 to Rams"
+        },
+        {
+            "question": "What was the score of the OU women's basketball team's win against East Texas A&M that led to their ranking at No. 9 in the AP poll?",
+            "answers": [
+                "112-59",
+                "100-45",
+                "98-70",
+                "85-60"
+            ],
+            "correct_index": 0,
+            "hint": "The correct score was a large margin victory early in the season.",
+            "source_title": "OU women's basketball drops to No. 9 in AP poll"
+        },
+        {
+            "question": "Which game marked Keontez Lewis's first reception after his injury during the 2023 season?",
+            "answers": [
+                "Against Texas",
+                "Against Missouri",
+                "Against Illinois State",
+                "Against Kent State"
+            ],
+            "correct_index": 1,
+            "hint": "The opponent was Missouri.",
+            "source_title": "OU football wide receiver Keontez Lewis records 1st reception in a month against Missouri"
+        },
+        {
+            "question": "Which OU-affiliated doctor was spotted on the sideline at the OU vs. Missouri football game in 2025?",
+            "answers": [
+                "Dr. Steven Shin",
+                "Dr. John Mateer",
+                "Dr. Parker Thune",
+                "Dr. Mike Stoops"
+            ],
+            "correct_index": 0,
+            "hint": "Look for the hand surgeon named in the article.",
+            "source_title": "Dr. Steven Shin, John Mateer's hand surgeon, attends OU-Missouri football game"
+        }
+    ]
+}

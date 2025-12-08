@@ -303,23 +303,32 @@ class QuizScreen:
     # ---------------- Timer logic ----------------
 
     def start_timer(self):
+        # Set starting time based on difficulty (default 30s)
         self.remaining_time = TIME_PER_DIFFICULTY.get(self.difficulty, 30)
         self.update_timer_label()
+
+        # Cancel any existing timer before starting a new one
         if self.timer_id is not None:
             self.root.after_cancel(self.timer_id)
+
+        # Call _tick every 1000 ms (1 second)
         self.timer_id = self.root.after(1000, self._tick)
 
     def _tick(self):
+        # Decrease time each second
         self.remaining_time -= 1
+
         if self.remaining_time <= 0:
             self.update_timer_label()
             self.game_over("Time's up! Game end. Goodbye!")
             return
 
         self.update_timer_label()
+        # Schedule next tick
         self.timer_id = self.root.after(1000, self._tick)
 
     def update_timer_label(self):
+        # Refresh timer label text
         self.timer_label.config(text=f"Time: {self.remaining_time}s")
 
     # ---------------- Question logic ----------------
