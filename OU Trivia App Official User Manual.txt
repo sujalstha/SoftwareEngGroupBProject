@@ -1,0 +1,140 @@
+OU Trivia App: Official User Manual
+Group: B
+Welcome to the OU Trivia App, a desktop experience designed to test your knowledge of University of Oklahoma history, sports, and culture using real-time news data.
+1. Product Identification Info
+•
+Product Name: OU Trivia App
+•
+Version: 1.0 (Current)
+•
+Developers: Group B (Ryan, Jole, Devin, Jayce, Mo, Sujal, Abraham)
+2. Product Specifications & Description
+The OU Trivia App is a dynamic quiz platform that uses Web Scraping and AI to ensure no two games are the same.
+•
+Core Functions:
+o
+Scrapes current articles from the OU Daily.
+o
+Utilizes OpenAI API to generate trivia questions, hints, and multiple-choice options.
+o
+Crimson & Cream UI: Custom graphical interface built with Tkinter.
+o
+Timed Gameplay: Dynamic timers based on selected difficulty.
+3. Usage Instructions (Step-by-Step)
+Setup & Installation
+1.
+Install Python: Ensure you have Python 3.9+ installed on your machine.
+2.
+Environment Variables: You must obtain an OpenAI API key. Set it in your terminal:
+o
+Windows: $env:OPENAI_API_KEY="your_key_here"
+o
+Mac/Linux: export OPENAI_API_KEY="your_key_here"
+3.
+Install Dependencies: Run pip install openai requests beautifulsoup4 in your command line
+
+Playing the Game
+1.
+Launch: Execute python main.py.
+2.
+Difficulty Selection: Choose between Easy, Medium, or Hard.
+o
+Easy: 30-second timer per question.
+o
+Medium: 20-second timer per question.
+o
+Hard: 10-second timer per question.
+3.
+Wait for Generation: The app will take a moment to scrape the news and build your custom question set.
+4.
+Answer Questions: Click the correct option before the timer runs out.
+5.
+Streaks: Correct answers build a streak. Look for reward popups at 5, 10, and 15 consecutive correct answers.
+4. Troubleshooting & FAQ
+Issue
+Solution
+App won't start
+Ensure your OpenAI API key is correctly set as an environment variable.
+UI freezes during loading
+The app uses background threading; wait a few seconds for the AI to finish generating questions.
+"Game Over" appears immediately
+This occurs if you select the wrong answer or the timer hits zero.
+Questions seem repetitive
+The app pulls from current OU Daily articles. Try again later when new news is published.
+
+
+5. Safety & Usage Policies
+•
+API Usage: This app requires an active internet connection to communicate with OpenAI and the OU Daily website. Be aware of your API usage costs.
+•
+Data Usage: No personal user data is stored; questions are stored locally in trivia_questions.json and overwritten each session.
+•
+Environment: Best used on desktop environments (Windows, macOS, or Linux) supporting Tkinter.
+6. Roadmap (Future Features)
+•
+Leaderboards: SQLite-based global player profiles.
+•
+Multimedia: Sound effects, simple animations, and dark mode.
+•
+Modes: Endless Mode and Sudden Death Mode.
+
+OU Trivia App: Technical Developer Documentation
+This section provides a technical deep dive into the core modules of the OU Trivia App. It is intended for developers looking to understand the automated pipeline that scrapes current news and converts it into AI-generated trivia.
+1. Data Collection: parseOUDaily.py
+The ArticleScraper class handles the extraction of raw news from the OU Daily website.
+•
+Technology: Uses requests for fetching HTML and BeautifulSoup4 for parsing.
+•
+Cleaning Pipeline:
+o
+Newsletter Stripping: Automatically removes common email subscription prompts (e.g., "FREE SIGN UP") from the article body.
+o
+Footer Cleaning: Truncates editorial footnotes and commenting policies.
+o
+Regex Formatting: Collapses multiple blank lines to maintain clean text for the AI prompt.
+•
+Output: Returns a tuple consisting of the title_text and content_text.
+2. The Logic Engine: generate_trivia.py
+This module acts as the orchestrator, connecting the scraped news to the OpenAI API.
+•
+AI Integration: Utilizes the gpt-4.1-mini model to transform current news into multiple-choice questions.
+•
+Context Window Management: To avoid token overflow, the content text is limited to the first 6,000 characters before being sent to the AI.
+•
+Difficulty Scaling: The script explicitly prompts the AI to adjust question complexity:
+o
+Easy: Straightforward facts obvious to most students.
+o
+Medium: Requires attention to specific article details.
+o
+Hard: Targets tricky or very specific information within the source text.
+•
+Prompt Engineering: The prompt forces a strict 4-line output format to ensure compatibility with the JSON parser.
+
+The JSONBuilder class is responsible for structured data storage and parsing raw AI text.
+•
+Strict Parsing: The parse_openai_output method validates that the AI responded in exactly 4 lines, ensuring the "Answers" line is a valid Python list.
+•
+Index Validation: Confirms the correct_index (0–3) accurately reflects an item within the provided answer list.
+•
+Persistence: The save_all method bundles the questions into a dictionary and writes them to trivia_questions.json.
+o
+Note: This file is overwritten every time a new game is generated to ensure fresh content.
+Key
+Type
+Description
+question
+string
+The trivia question text.
+answers
+list
+4 possible answer choices.
+correct_index
+integer
+Index (0–3) of the correct answer.
+hint
+string
+Short hint for the player.
+source_title
+string
+The title of the OU Daily article used.
