@@ -75,11 +75,6 @@ class AuthDB:
 
         return stored_hash == self.hash_password(password, salt)
 
-
-# -------------------------------
-# Required functions for testing
-# -------------------------------
-
 def init_db(path=":memory:"):
     """
     Initialize a global database instance.

@@ -1,37 +1,47 @@
 import unittest
 import os
 import sys
-
-# Ensure Python imports the login_hashing.py located in THIS FOLDER
-sys.path.append(os.path.dirname(__file__))
-
-import login_hashing as auth
-
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../Security Question')))
+import login_hashing as auth  # Adjust path if needed
 
 class TestLoginHashing(unittest.TestCase):
-
     def setUp(self):
-        # Initialize a clean in-memory database for each test
-        auth.init_db(":memory:")
-        self.conn = auth.get_conn()
+        # Reinitialize database before each test
+        if os.path.exists("auth.db"):
+            os.remove("auth.db")
+        self.db = auth.AuthDB("auth.db")
 
-    def test_create_user(self):
-        self.assertTrue(auth._GLOBAL_AUTH.create_user("alice", "password123"))
+    def tearDown(self):
+        if os.path.exists("auth.db"):
+            os.remove("auth.db")
 
-    def test_duplicate_user(self):
-        auth._GLOBAL_AUTH.create_user("bob", "mypassword")
-        self.assertFalse(auth._GLOBAL_AUTH.create_user("bob", "anotherpass"))
+    def test_create_user_success(self):
+        """Test that creating a new user works."""
+        result = self.db.create_user("alice", "password123")
+        self.assertTrue(result, "Creating a new user should succeed")
 
-    def test_verify_correct(self):
-        auth._GLOBAL_AUTH.create_user("charlie", "mypassword")
-        self.assertTrue(auth._GLOBAL_AUTH.verify_user("charlie", "mypassword"))
+    def test_create_user_duplicate(self):
+        """Test that creating a duplicate user fails."""
+        self.db.create_user("bob", "mypassword")
+        result = self.db.create_user("bob", "anotherpass")
+        self.assertFalse(result, "Creating a duplicate user should fail")
 
-    def test_verify_wrong(self):
-        auth._GLOBAL_AUTH.create_user("dave", "rightpass")
-        self.assertFalse(auth._GLOBAL_AUTH.verify_user("dave", "wrongpass"))
+    def test_verify_correct_password(self):
+        """Test logging in with correct password."""
+        self.db.create_user("charlie", "mypassword")
+        result = self.db.verify_user("charlie", "mypassword")
+        self.assertTrue(result, "Correct password should verify successfully")
+
+    def test_verify_incorrect_password(self):
+        """Test logging in with incorrect password."""
+        self.db.create_user("dave", "mypassword")
+        result = self.db.verify_user("dave", "wrongpass")
+        self.assertFalse(result, "Incorrect password should fail verification")
 
     def test_verify_nonexistent_user(self):
-        self.assertFalse(auth._GLOBAL_AUTH.verify_user("ghost", "whatever"))
+        """Test logging in with a username that doesn't exist."""
+        result = self.db.verify_user("eve", "anyPassword")
+        self.assertFalse(result, "Nonexistent user should fail verification")
 
 
 if __name__ == "__main__":
