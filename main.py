@@ -5,6 +5,7 @@ import tkinter as tk
 from DiffSelect import DiffSelect
 from generate_trivia import generate_questions_for_difficulty
 
+#------ UI Theme -------
 # OU crimson and cream
 OU_CRIMSON = "#841617"
 OU_CREAM = "#FDF9D8"
@@ -16,7 +17,10 @@ TIME_PER_DIFFICULTY = {
     "Hard": 10,
 }
 
-
+#------ Start Screen -------
+# -Shows game title 
+# - Lets users choose difficulty
+# - Handles async loading of questions via worker thread
 class StartScreen:
     def __init__(self, root: tk.Tk, diff_manager: DiffSelect):
         self.root = root
@@ -28,14 +32,17 @@ class StartScreen:
         self.worker_error = None
         self.chosen_difficulty = None
 
+        # Basic UI setup
         self.root.title("OU Trivia Game")
         self.root.geometry("900x650")  # bigger window so text fits
         self.root.configure(bg=OU_CREAM)
         self.root.resizable(False, False)
 
+        # Main container frame
         main_frame = tk.Frame(root, bg=OU_CREAM)
         main_frame.pack(expand=True, padx=20, pady=20, fill="both")
 
+        # Title + subtitle
         title_main = tk.Label(
             main_frame,
             text="OU Trivia",
@@ -54,6 +61,7 @@ class StartScreen:
         )
         subtitle.pack(pady=10)
 
+        # Difficulty selection UI
         diff_label = tk.Label(
             main_frame,
             text="Select Difficulty:",
@@ -66,6 +74,7 @@ class StartScreen:
         btn_frame = tk.Frame(main_frame, bg=OU_CREAM)
         btn_frame.pack()
 
+        # Create difficulty buttons
         self.diff_buttons = []
         for level in ["Easy", "Medium", "Hard"]:
             btn = tk.Button(
@@ -84,6 +93,7 @@ class StartScreen:
             btn.pack(side="left", padx=15, pady=10)
             self.diff_buttons.append(btn)
 
+        # Exit game button
         exit_button = tk.Button(
             main_frame,
             text="Exit",
@@ -97,6 +107,7 @@ class StartScreen:
         )
         exit_button.pack(pady=25)
 
+         # Status label (error/loading text)
         self.status_label = tk.Label(
             main_frame,
             text="",
@@ -194,6 +205,20 @@ class StartScreen:
         QuizScreen(self.root, questions, self.chosen_difficulty)
 
 
+# ============================================================
+#                      QUIZ SCREEN UI
+# ============================================================
+# Shows:
+# - Timer
+# - Streak counter
+# - Question & hint
+# - 4 answer buttons
+#
+# Handles:
+# - Timer countdown logic
+# - Updating streak
+# - Game-over & win states
+# ============================================================
 class QuizScreen:
     def __init__(self, root: tk.Tk, questions, difficulty: str):
         self.root = root
@@ -204,6 +229,7 @@ class QuizScreen:
         self.timer_id = None
         self.remaining_time = TIME_PER_DIFFICULTY.get(difficulty, 30)
 
+        # Window setup
         self.root.title(f"OU Trivia — {difficulty} mode")
         self.root.configure(bg=OU_CREAM)
 
@@ -242,7 +268,7 @@ class QuizScreen:
         )
         self.streak_label.pack(side="right")
 
-        # Question text
+        # ---------------- Question text ----------------
         self.question_label = tk.Label(
             self.main_frame,
             text="",
@@ -254,7 +280,7 @@ class QuizScreen:
         )
         self.question_label.pack(pady=(25, 15))
 
-        # Hint label
+       # ---------------- Hint text ----------------
         self.hint_label = tk.Label(
             self.main_frame,
             text="Hint: ",
@@ -266,7 +292,7 @@ class QuizScreen:
         )
         self.hint_label.pack(pady=(0, 20))
 
-        # Answer buttons
+        # ---------------- Answer Buttons ----------------
         self.buttons_frame = tk.Frame(self.main_frame, bg=OU_CREAM)
         self.buttons_frame.pack(pady=10, fill="x")
 
@@ -289,6 +315,7 @@ class QuizScreen:
             btn.pack(pady=6, padx=100, fill="x")
             self.option_buttons.append(btn)
 
+        # Status area (correct/incorrect messages)
         self.status_label = tk.Label(
             self.main_frame,
             text="",
@@ -298,6 +325,7 @@ class QuizScreen:
         )
         self.status_label.pack(pady=(15, 0))
 
+         # Load first question
         self.load_question()
 
     # ---------------- Timer logic ----------------
